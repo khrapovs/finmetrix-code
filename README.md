@@ -1,4 +1,0 @@
-finmetrix
-=========
-
-Financial Econometrics
