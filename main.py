@@ -92,7 +92,6 @@ r = cir.paths[:,0]
 
 compare_estimators(cir, r, theta_true)
 
-
 #%% Real data
 
 import zipfile

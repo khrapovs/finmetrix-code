@@ -5,6 +5,9 @@
 
 from math import exp, log
 import numpy as np
+import statsmodels.api as sm
+from scipy.stats import ncx2
+        
 from Model import Model
 
 class CIR(Model):
@@ -26,7 +29,6 @@ class CIR(Model):
         kappa, mu, sigma = theta
         return 2 * kappa * mu - sigma ** 2 > 0
 
-
     def exact_loc(self, x, theta):
         kappa, mu, sigma = theta
         e = exp( - kappa * self.h )
@@ -38,7 +40,6 @@ class CIR(Model):
         return ( (x * e + (1 - e) / 2) * (1 - e) * sigma ** 2 / kappa ) ** .5
     
     def estimate_ols_euler(self, x):
-        import statsmodels.api as sm
         Y = (x[1:] - x[:-1]) / x[:-1] ** .5
         X1 = self.h / x[:-1] ** .5
         X2 = - self.h * x[:-1] ** .5
@@ -50,7 +51,6 @@ class CIR(Model):
         return np.array([kappa, mu, sigma])
     
     def estimate_ols_exact(self, x):
-        import statsmodels.api as sm
         Y, X = x[1:], x[:-1]
         X = sm.add_constant(X)
         results = sm.OLS(Y, X).fit()
@@ -66,7 +66,6 @@ class CIR(Model):
         return super(CIR, self).quasi_likelihood(theta, x, scheme)
     
     def exact_likelihood(self, theta, x):
-        from scipy.stats import ncx2
         kappa, mu, sigma = theta
         e = exp( - kappa * self.h )
         c = 2 * kappa / sigma ** 2 / (1 - e)
