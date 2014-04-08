@@ -3,10 +3,7 @@
 # mailto:khrapovs@gmail.com
 # http://sites.google.com/site/khrapovs/
 
-import numpy as np
 import pandas as ps
-import matplotlib as mpl
-import matplotlib.pylab as plt
 
 ps.set_option('float_format', '{:8.3f}'.format)
 
