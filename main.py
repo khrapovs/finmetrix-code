@@ -18,63 +18,6 @@ mpl.rcParams.update({'font.size': 10})
 np.set_printoptions(precision = 3, suppress = True)
 ps.set_option('float_format', '{:8.3f}'.format)
 
-
-
-#%% GBM model
-
-# At this point we can initialize a model object using the class GBM.
-mu, sigma = .05, .1
-theta_true = np.array([mu, sigma])
-gbm = GBM()
-
-x0, T, h, M, S = mu, 200, 1., 100, 3
-N = int(float(T) / h)
-gbm.simulate(x0, theta_true, h, M, N, S)
-
-# Calling another method creates a simple plot.
-gbm.plot_trajectories(3)
-
-# Use the first path for furtehr estimation.
-logS = gbm.paths[:,0]
-
-compare_estimators(gbm, logS, theta_true)
-
-#%% Vasicek model
-
-kappa, mu, sigma = 1.5, .5, .1
-theta_true = np.array([kappa, mu, sigma])
-x0, T, h, M, S = mu, 200, 1., 100, 1e3
-N = int(float(T) / h)
-
-vasicek = Vasicek()
-vasicek.simulate(x0, theta_true, h, M, N, S)
-
-vasicek.plot_trajectories(3)
-vasicek.plot_final_distr()
-
-r = vasicek.paths[:,0]
-
-
-compare_estimators(vasicek, r, theta_true)
-
-#%% Cox-Ingersoll-Ross model
-
-kappa, mu, sigma = 1, .2, .2
-theta_true = np.array([kappa, mu, sigma])
-x0, T, h, M, S = mu, 200, 1., 100, 1e2
-N = int(float(T) / h)
-
-cir = CIR()
-cir.simulate(x0, theta_true, h, M, N, S)
-cir.is_valid(theta_true)
-
-cir.plot_trajectories(3)
-cir.plot_final_distr()
-
-r = cir.paths[:,0]
-
-compare_estimators(cir, r, theta_true)
-
 #%% Real data
 
 import zipfile
