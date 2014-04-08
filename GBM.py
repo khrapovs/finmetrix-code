@@ -7,6 +7,7 @@ import numpy as np
 from Model import Model
 import pandas as ps
 import statsmodels.api as sm
+from compare_estimators import compare_estimators
 
 class GBM(Model):
     
@@ -45,3 +46,28 @@ class GBM(Model):
     
     def exact_likelihood(self, theta, x):
         return self.quasi_likelihood(theta, x, 'exact')
+
+def test():
+    #%% GBM model
+
+    # At this point we can initialize a model object using the class GBM.
+    mu, sigma = .05, .1
+    theta_true = np.array([mu, sigma])
+    gbm = GBM()
+
+    x0, T, h, M, S = mu, 200, 1., 100, 3
+    N = int(float(T) / h)
+    gbm.simulate(x0, theta_true, h, M, N, S)
+
+    # Calling another method creates a simple plot.
+    gbm.plot_trajectories(3)
+
+    # Use the first path for furtehr estimation.
+    logS = gbm.paths[:,0]
+
+    compare_estimators(gbm, logS, theta_true)
+
+if __name__ == '__main__':
+
+    print 'Run tests...'
+    test()
