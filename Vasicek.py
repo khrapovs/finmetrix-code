@@ -7,6 +7,7 @@ import numpy as np
 from math import exp, log
 
 from Model import Model
+from compare_estimators import compare_estimators
 
 class Vasicek(Model):
     
@@ -59,3 +60,27 @@ class Vasicek(Model):
     
     def exact_likelihood(self, theta, x):
         return self.quasi_likelihood(theta, x, 'exact')
+
+def test():
+    #%% Vasicek model
+
+    kappa, mu, sigma = 1.5, .5, .1
+    theta_true = np.array([kappa, mu, sigma])
+    x0, T, h, M, S = mu, 200, 1., 100, 1e3
+    N = int(float(T) / h)
+
+    vasicek = Vasicek()
+    vasicek.simulate(x0, theta_true, h, M, N, S)
+
+    vasicek.plot_trajectories(3)
+    vasicek.plot_final_distr()
+
+    r = vasicek.paths[:,0]
+
+
+    compare_estimators(vasicek, r, theta_true)
+
+if __name__ == '__main__':
+
+    print 'Run tests...'
+    test()

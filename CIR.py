@@ -9,6 +9,7 @@ import statsmodels.api as sm
 from scipy.stats import ncx2
         
 from Model import Model
+from compare_estimators import compare_estimators
 
 class CIR(Model):
     
@@ -75,3 +76,27 @@ class CIR(Model):
         nc = 2 * c * x[:-1] * e
         l = ncx2.logpdf(v, df, nc) + log(2 * c)
         return - l[np.isfinite(l)].mean()
+
+def test():
+    #%% Cox-Ingersoll-Ross model
+
+    kappa, mu, sigma = 1, .2, .2
+    theta_true = np.array([kappa, mu, sigma])
+    x0, T, h, M, S = mu, 200, 1., 100, 1e2
+    N = int(float(T) / h)
+
+    cir = CIR()
+    cir.simulate(x0, theta_true, h, M, N, S)
+    cir.is_valid(theta_true)
+
+    cir.plot_trajectories(3)
+    cir.plot_final_distr()
+
+    r = cir.paths[:,0]
+
+    compare_estimators(cir, r, theta_true)
+
+if __name__ == '__main__':
+
+    print 'Run tests...'
+    test()

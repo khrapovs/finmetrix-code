@@ -4,9 +4,10 @@
 # http://sites.google.com/site/khrapovs/
 
 import numpy as np
-from Model import Model
 import pandas as ps
 import statsmodels.api as sm
+
+from Model import Model
 from compare_estimators import compare_estimators
 
 class GBM(Model):
