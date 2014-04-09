@@ -58,7 +58,9 @@ class Heston(object):
     def nice_errors(self, e, sdim):
         """Normalize the errors and apply antithetic sampling.
         
-        sdim : which dimention corresponds to simulation instances?
+        Inputs:
+        e -- untreated innovation array
+        sdim -- which dimention corresponds to simulation instances?
         """
         e -= e.mean(sdim, keepdims = True)
         e /= e.std(sdim, keepdims = True)
@@ -78,12 +80,13 @@ class Heston(object):
     def simulate(self, x0, theta, h, T, M, S):
         """Simulate bivariate diffusion.
         
-        x0 : initial value of the process
-        theta : parameters of the model
-        h : time length of the unit interval
-        T : total time length of the series
-        M : number of intermediate steps for Euler discretization
-        S : number os simulations
+        Inputs:
+        x0 -- initial value of the process
+        theta -- parameters of the model
+        h -- time length of the unit interval
+        T -- total time length of the series
+        M -- number of intermediate steps for Euler discretization
+        S -- number os simulations
         """
         self.h = h
         # How many actual data points to generate?
