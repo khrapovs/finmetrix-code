@@ -32,7 +32,7 @@ class Vasicek(Model):
     def exact_scale(self, x, theta):
         kappa, mu, sigma = theta
         e = exp( - 2 * kappa * self.h )
-        return ( (1 - e) * sigma ** 2 / (2 * kappa) ) ** .5
+        return ( (1 - e**2) * sigma**2 / (2 * kappa) ) ** .5
     
     def estimate_ols_euler(self, x):
         import statsmodels.api as sm
