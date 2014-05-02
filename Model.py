@@ -3,12 +3,14 @@
 # mailto:khrapovs@gmail.com
 # http://sites.google.com/site/khrapovs/
 
+from __future__ import print_function
 import numpy as np
 from numpy.linalg import inv
 import matplotlib.pylab as plt
 from scipy.optimize import minimize
 from scipy.stats.kde import gaussian_kde
 from scipy.stats import norm
+from functools import reduce
 
 class Model(object):
     
@@ -33,7 +35,7 @@ class Model(object):
             return z + self.euler_loc(z, theta) / M \
                 + self.euler_scale(z, theta) / M ** .5 * e
         
-        for n in xrange(N-1):
+        for n in range(N-1):
             x[n+1] = reduce(sim, self.eps[n], x[n])
         
         if S > 1:
@@ -43,7 +45,7 @@ class Model(object):
             
     def plot_trajectories(self, num):
         if self.paths is None:
-            print 'Simulate data first!'
+            print('Simulate data first!')
         else:
             x = np.arange(0, self.h * self.N, self.h)
             plt.plot(x, self.paths[:,:num])
@@ -53,7 +55,7 @@ class Model(object):
     
     def plot_final_distr(self):
         if self.paths is None:
-            print 'Simulate data first!'
+            print('Simulate data first!')
         else:
             data = self.paths[-1]
             density = gaussian_kde(data)

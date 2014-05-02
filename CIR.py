@@ -3,6 +3,7 @@
 # mailto:khrapovs@gmail.com
 # http://sites.google.com/site/khrapovs/
 
+from __future__ import print_function
 from math import exp, log
 import numpy as np
 import statsmodels.api as sm
@@ -98,5 +99,5 @@ def test():
 
 if __name__ == '__main__':
 
-    print 'Run tests...'
+    print('Run tests...')
     test()

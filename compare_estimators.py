@@ -3,6 +3,7 @@
 # mailto:khrapovs@gmail.com
 # http://sites.google.com/site/khrapovs/
 
+from __future__ import print_function
 import pandas as ps
 
 ps.set_option('float_format', '{:8.3f}'.format)
@@ -25,4 +26,4 @@ def compare_estimators(model, x, theta_true):
     df['logL'] = df.apply(lambda y: - model.exact_likelihood(y, x), axis = 1)
     df['Rank'] = df['logL'].rank(ascending = False).astype(int)
     
-    print df
+    print(df)
