@@ -13,8 +13,8 @@ def weight(lags, kay1, kay2):
     Returns
         vector of weights of the same size as d
     """
-    return np.exp(kay1 * lags + kay2 * lags**2) \
-        / np.exp(kay1 * lags + kay2 * lags**2).sum()
+    out = np.exp(kay1 * lags + kay2 * lags**2)
+    return  out / out.sum()
 
 def test():
     """Test weighting function with both parameters."""
